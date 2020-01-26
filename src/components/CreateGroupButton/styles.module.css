@@ -1,0 +1,19 @@
+.modalContent {
+  padding-top: calc(var(--app-unit-primary) * 2);
+}
+
+.modalButtons {
+  display: flex;
+  padding-top: calc(var(--app-unit-primary) * 2);
+  justify-content: center;
+}
+
+.modalButton {
+  margin: calc(var(--app-unit-primary) / 2);
+  padding: var(--app-unit-primary) calc(var(--app-unit-primary) * 2);
+}
+
+.heading {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}

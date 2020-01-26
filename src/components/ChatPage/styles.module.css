@@ -1,0 +1,70 @@
+.main {
+  padding: calc(var(--app-unit-primary) * 2);
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  overflow-y: scroll;
+  padding: 0;
+  margin: calc(var(--app-unit-primary) * 2);
+  flex-grow: 1;
+}
+
+.padded {
+  padding: var(--app-unit-primary) calc(var(--app-unit-primary) * 2) 0
+    calc(var(--app-unit-primary) * 2);
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(var(--app-unit-primary) * 2);
+}
+
+.message::after {
+  content: attr(data-sent);
+  display: block;
+  margin: var(--app-unit-primary) 0;
+  font-size: 0.75rem;
+  color: var(--group-message-color);
+}
+
+[data-sender="true"] {
+  align-items: flex-end;
+}
+
+[data-sender="true"] p {
+  background-color: var(--app-color-secondary);
+  padding: calc(var(--app-unit-primary) * 2);
+  border-radius: var(--app-unit-primary);
+  max-width: 80%;
+}
+
+[data-receiver="true"] {
+  align-items: flex-start;
+}
+
+[data-receiver="true"] p {
+  background-color: var(--app-color-third);
+  padding: calc(var(--app-unit-primary) * 2);
+  max-width: 80%;
+  border-radius: var(--app-unit-primary);
+}
+
+.content {
+  margin: 0;
+}
+
+.noMessages {
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  padding: calc(var(--app-unit-primary) * 2);
+}

@@ -1,0 +1,13 @@
+.even {
+  background-color: var(--app-color-third);
+}
+
+.padded {
+  padding: var(--app-unit-primary) calc(var(--app-unit-primary) * 2) 0
+    calc(var(--app-unit-primary) * 2);
+}
+
+.noGroups {
+  text-align: center;
+  margin: calc(var(--app-unit-primary) * 3);
+}

@@ -1,0 +1,57 @@
+:root {
+  --group-divider-color: #222534;
+  --group-name-color: #ffffff;
+  --group-message-color: rgba(255, 255, 255, 0.5);
+}
+
+.avatar {
+  margin-right: var(--app-unit-primary);
+  width: 60px;
+  border-radius: 60px;
+  border: 2px solid var(--app-color-secondary);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--group-divider-color);
+  padding: calc(var(--app-unit-primary) * 2) var(--app-unit-primary);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  padding-bottom: calc(var(--app-unit-primary) / 2);
+  font-weight: bold;
+  color: var(--group-name-color);
+  margin: 0;
+}
+
+.time {
+  width: 44px;
+  text-align: right;
+  font-size: 0.875rem;
+  color: var(--group-message-color);
+  padding-bottom: calc(var(--app-unit-primary) / 2);
+  margin: 0;
+}
+
+.message {
+  width: calc(100% - 44px);
+  color: var(--group-message-color);
+  max-height: calc(var(--app-unit-primary) * 5);
+  overflow: hidden;
+  line-height: 20px;
+  margin: 0;
+  padding-bottom: calc(var(--app-unit-primary) / 2);
+}

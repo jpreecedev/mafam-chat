@@ -1,0 +1,16 @@
+.header {
+  padding-top: calc(var(--app-unit-primary) * 6);
+  text-align: center;
+}
+
+.main {
+  padding: calc(var(--app-unit-primary) * 2);
+}
+
+.logo {
+  width: 90%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto calc(var(--app-unit-primary) * 2) auto;
+  display: block;
+}
