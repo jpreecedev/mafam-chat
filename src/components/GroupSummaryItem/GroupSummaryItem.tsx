@@ -2,13 +2,14 @@ import React from "react";
 
 import { formatTime } from "../../utils";
 import styles from "./styles.module.css";
+import { Message } from "../../types";
 
 export interface GroupSummaryItemProps {
   id: string;
   avatar: string;
   name: string;
   time: Date;
-  message: string;
+  message: Message;
   onSelected?: (id: string) => void;
 }
 
@@ -28,7 +29,7 @@ const GroupSummaryItem: React.FunctionComponent<GroupSummaryItemProps> = ({
         <p className={styles.time}>{formatTime(time)}</p>
       </div>
       <div className={styles.row}>
-        <p className={styles.message}>{message}</p>
+        <p className={styles.message}>{message.content}</p>
       </div>
     </div>
   </div>

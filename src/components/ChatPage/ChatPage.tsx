@@ -51,6 +51,7 @@ const ChatPage = () => {
       .database()
       .ref(`${CHATS_REF}/${id}/${MESSAGES_REF}`)
       .push({
+        avatar: firebase.auth().currentUser?.providerData[0]?.photoURL,
         sender: firebase.auth().currentUser?.uid,
         content: message,
         sent: firebase.database.ServerValue.TIMESTAMP

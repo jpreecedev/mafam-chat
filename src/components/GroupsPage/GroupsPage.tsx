@@ -12,6 +12,20 @@ const GroupsPage = () => {
   const history = useHistory();
   const groups = useFirebaseChatGroup();
 
+  const renderGroups = () =>
+    groups.map((group, index) => (
+      <div className={styles[index % 2 === 0 ? "even" : "odd"]}>
+        <GroupSummaryItem
+          id={group.key}
+          avatar={group.lastMessage.avatar || defaultAvatar}
+          name={group.name}
+          time={new Date()}
+          message={group.lastMessage}
+          onSelected={() => history.push(`/chat/${group.key}`)}
+        />
+      </div>
+    ));
+
   const renderNoGroups = () => {
     return (
       groups.length === 0 && (
@@ -22,18 +36,7 @@ const GroupsPage = () => {
 
   return (
     <TitleLayout title="Your Groups" titleClasses={styles.padded}>
-      {groups.map((group, index) => (
-        <div className={styles[index % 2 === 0 ? "even" : "odd"]}>
-          <GroupSummaryItem
-            id={group.key}
-            avatar={defaultAvatar}
-            name={group.name}
-            time={new Date()}
-            message={group.lastMessage}
-            onSelected={() => history.push(`/chat/${group.key}`)}
-          />
-        </div>
-      ))}
+      {renderGroups()}
       {renderNoGroups()}
       <CreateGroupButton />
     </TitleLayout>

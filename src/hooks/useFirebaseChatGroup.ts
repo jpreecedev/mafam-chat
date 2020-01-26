@@ -1,8 +1,14 @@
 import React from "react";
 import firebase from "firebase/app";
 
-import { Group } from "../types";
+import { Group, Message } from "../types";
 import { CHATS_REF } from "../constants";
+
+const getLastMessage = (snapshot: any): Message => {
+  const arr = Object.keys(snapshot);
+  const lastMessageKey = arr[arr.length - 1];
+  return snapshot[lastMessageKey];
+};
 
 const useFirebaseChatGroup = () => {
   const [groups, setGroups] = React.useState<Group[]>([]);
@@ -23,10 +29,7 @@ const useFirebaseChatGroup = () => {
           created: new Date(val[key].created),
           name: val[key].name,
           messages: val[key].messages || [],
-          lastMessage:
-            val[key].messages && val[key].messages.length > -1
-              ? val[key].messages[val[key].messages.length - 1]
-              : null
+          lastMessage: getLastMessage(val[key].messages)
         }));
 
         setGroups(groups);

@@ -2,6 +2,7 @@ export type Message = {
   sender: string;
   sent: Date;
   content: string;
+  avatar: string;
 };
 
 export type User = {
@@ -18,5 +19,5 @@ export type Group = {
   created: Date;
   name: string;
   messages: Message[];
-  lastMessage: string;
+  lastMessage: Message;
 };
