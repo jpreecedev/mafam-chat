@@ -47,27 +47,35 @@ const useFirebaseChatGroupById = (id: string) => {
   const [group, setGroup] = React.useState<Group | null>(null);
 
   React.useEffect(() => {
-    firebase
+    const userId = firebase.auth().currentUser?.uid;
+    const chatRef = firebase
       .database()
       .ref(CHATS_REF)
-      .child(id)
-      .on("value", snapshot => {
-        const val = snapshot.val();
-        if (!val) {
-          setGroup(null);
-          return;
-        }
-        setGroup({
-          key: id,
-          created: new Date(val.created),
-          name: val.name,
-          messages: val.messages || [],
-          lastMessage:
-            val.messages && val.messages.length > -1
-              ? val.messages[val.messages.length - 1]
-              : null
-        });
+      .child(id);
+
+    if (userId) {
+      chatRef.update({
+        [userId]: true
       });
+    }
+
+    chatRef.on("value", snapshot => {
+      const val = snapshot.val();
+      if (!val) {
+        setGroup(null);
+        return;
+      }
+      setGroup({
+        key: id,
+        created: new Date(val.created),
+        name: val.name,
+        messages: val.messages || [],
+        lastMessage:
+          val.messages && val.messages.length > -1
+            ? val.messages[val.messages.length - 1]
+            : null
+      });
+    });
   }, [id]);
 
   return group;

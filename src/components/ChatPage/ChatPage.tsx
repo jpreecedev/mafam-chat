@@ -19,9 +19,9 @@ const scrollToBottom = (mainEl: React.MutableRefObject<HTMLElement | null>) => {
 };
 
 const ChatPage = () => {
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const [newMessage, setNewMessage] = React.useState<string>("");
-  const group = useFirebaseChatGroupById(id || "");
+  const group = useFirebaseChatGroupById(id);
   const user = useFirebaseAuth(firebase);
   const mainEl = React.useRef<HTMLElement | null>(null);
 
