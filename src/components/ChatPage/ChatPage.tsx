@@ -85,7 +85,11 @@ const ChatPage = () => {
             }
           }}
         />
-        <button type="button" onClick={() => sendMessage(newMessage)}>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => sendMessage(newMessage)}
+        >
           <img src={sendImg} alt="send" />
         </button>
       </footer>

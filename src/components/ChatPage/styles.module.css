@@ -3,9 +3,16 @@
 }
 
 .container {
-  height: 100vh;
+  height: 98vh;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (min-width: 990px) {
+  .container {
+    height: 95vh;
+  }
 }
 
 .body {
@@ -24,7 +31,18 @@
   text-align: center;
 }
 
+.button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 42px;
+  height: 42px;
+}
+
 .footer {
   display: flex;
   padding: calc(var(--app-unit-primary) * 2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -5,6 +5,10 @@ import { Group, Message } from "../types";
 import { CHATS_REF } from "../constants";
 
 const getLastMessage = (snapshot: any): Message => {
+  if (!snapshot) {
+    return {} as Message;
+  }
+
   const arr = Object.keys(snapshot);
   const lastMessageKey = arr[arr.length - 1];
   return snapshot[lastMessageKey];
