@@ -15,7 +15,11 @@ const LandingPage: React.FunctionComponent<LandingPageProps> = ({ user }) => (
     <header className={styles.header}>
       <div>
         <img src={logo} className={styles.logo} alt="MaFam.chat" />
-        <h2>An easy way to chat with your friends and family.</h2>
+        <h2>
+          An easy way to chat
+          <br />
+          with your friends and family.
+        </h2>
       </div>
     </header>
     <main className={styles.main}>
