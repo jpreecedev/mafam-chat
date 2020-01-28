@@ -5,33 +5,34 @@ import { useParams } from "react-router-dom";
 import styles from "./styles.module.css";
 import sendImg from "../../assets/send.png";
 import { Header } from "../Header";
-import { formatDateTime } from "../../utils";
 import { useFirebaseChatGroupById, useFirebaseAuth } from "../../hooks";
 import { CHATS_REF, MESSAGES_REF } from "../../constants";
 import { Message } from "../../types";
+import { ChatMessage } from "../ChatMessage";
+
+const scrollToBottom = (mainEl: React.MutableRefObject<HTMLElement | null>) => {
+  setTimeout(() => {
+    if (mainEl && mainEl.current) {
+      mainEl.current.scrollTo(0, mainEl.current.scrollHeight);
+    }
+  });
+};
 
 const ChatPage = () => {
   const { id } = useParams();
   const [newMessage, setNewMessage] = React.useState<string>("");
   const group = useFirebaseChatGroupById(id || "");
   const user = useFirebaseAuth(firebase);
+  const mainEl = React.useRef<HTMLElement | null>(null);
 
   const renderMessages = () => {
+    scrollToBottom(mainEl);
     return (
       group &&
       group.messages &&
       Object.keys(group.messages).map(key => {
         const message: Message = group.messages[key];
-        return (
-          <div
-            data-sender={message.sender === user?.uid}
-            data-receiver={message.sender !== user?.uid}
-            data-sent={formatDateTime(new Date(message.sent))}
-            className={styles.message}
-          >
-            <p className={styles.content}>{message.content}</p>
-          </div>
-        );
+        return <ChatMessage message={message} user={user} key={key} />;
       })
     );
   };
@@ -53,6 +54,7 @@ const ChatPage = () => {
       .push({
         avatar: firebase.auth().currentUser?.providerData[0]?.photoURL,
         sender: firebase.auth().currentUser?.uid,
+        senderName: firebase.auth().currentUser?.displayName,
         content: message,
         sent: firebase.database.ServerValue.TIMESTAMP
       });
@@ -64,7 +66,7 @@ const ChatPage = () => {
     <div className={styles.container}>
       <Header />
       <h2 className={styles.padded}>{group && group.name}</h2>
-      <main className={styles.body}>
+      <main className={styles.body} ref={mainEl}>
         {renderMessages()}
         {renderNoMessages()}
       </main>
@@ -77,6 +79,11 @@ const ChatPage = () => {
           minLength={1}
           value={newMessage}
           onChange={e => setNewMessage(e.currentTarget.value)}
+          onKeyPress={e => {
+            if (e.key.toLowerCase() === "enter") {
+              sendMessage(newMessage);
+            }
+          }}
         />
         <button type="button" onClick={() => sendMessage(newMessage)}>
           <img src={sendImg} alt="send" />

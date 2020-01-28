@@ -1,5 +1,6 @@
 export type Message = {
   sender: string;
+  senderName: string;
   sent: Date;
   content: string;
   avatar: string;

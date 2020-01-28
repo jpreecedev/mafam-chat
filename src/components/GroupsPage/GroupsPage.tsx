@@ -14,7 +14,7 @@ const GroupsPage = () => {
 
   const renderGroups = () =>
     groups.map((group, index) => (
-      <div className={styles[index % 2 === 0 ? "even" : "odd"]}>
+      <div className={styles[index % 2 === 0 ? "even" : "odd"]} key={group.key}>
         <GroupSummaryItem
           id={group.key}
           avatar={group.lastMessage.avatar || defaultAvatar}

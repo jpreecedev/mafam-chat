@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import styles from "./styles.module.css";
 import { CHATS_REF } from "../../constants";
