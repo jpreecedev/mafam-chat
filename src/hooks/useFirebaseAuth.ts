@@ -26,11 +26,7 @@ const updateToken = () => {
             }/notificationTokens/currentToken`
           )
           .set(true);
-      } else {
       }
-      requestPermissionForNotifications(() => {
-        updateToken();
-      });
     });
 };
 
@@ -54,7 +50,9 @@ const useFirebaseAuth = (firebaseApp: firebase.app.App | any) => {
           .child(firebaseUser.uid)
           .set(firebaseUser.providerData[0]);
 
-        updateToken();
+        requestPermissionForNotifications(() => {
+          updateToken();
+        });
       });
 
     return () => {
