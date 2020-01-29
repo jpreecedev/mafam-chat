@@ -18,26 +18,29 @@ const useFirebaseChatGroup = () => {
   const [groups, setGroups] = React.useState<Group[]>([]);
 
   React.useEffect(() => {
-    firebase
-      .database()
-      .ref(CHATS_REF)
-      .on("value", snapshot => {
-        const val = snapshot.val();
-        if (!val) {
-          setGroups([]);
-          return;
-        }
+    const chatRef = firebase.database().ref(CHATS_REF);
 
-        const groups = Object.keys(val).map<Group>(key => ({
-          key,
-          created: new Date(val[key].created),
-          name: val[key].name,
-          messages: val[key].messages || [],
-          lastMessage: getLastMessage(val[key].messages)
-        }));
+    chatRef.on("value", snapshot => {
+      const val = snapshot.val();
+      if (!val) {
+        setGroups([]);
+        return;
+      }
 
-        setGroups(groups);
-      });
+      const groups = Object.keys(val).map<Group>(key => ({
+        key,
+        created: new Date(val[key].created),
+        name: val[key].name,
+        messages: val[key].messages || [],
+        lastMessage: getLastMessage(val[key].messages)
+      }));
+
+      setGroups(groups);
+    });
+
+    return () => {
+      chatRef.off("value");
+    };
   }, []);
 
   return groups;
@@ -76,6 +79,10 @@ const useFirebaseChatGroupById = (id: string) => {
             : null
       });
     });
+
+    return () => {
+      chatRef.off("value");
+    };
   }, [id]);
 
   return group;
