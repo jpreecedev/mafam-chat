@@ -1,10 +1,17 @@
 .message {
   display: flex;
   flex-direction: column;
+}
+
+.message.hidden {
+  margin-bottom: var(--app-unit-primary);
+}
+
+.message:not(.hidden) {
   margin-bottom: calc(var(--app-unit-primary) * 2);
 }
 
-.message::after {
+.message:not(.hidden)::after {
   content: attr(data-name) " on " attr(data-sent);
   display: block;
   margin: var(--app-unit-primary) 0;
@@ -36,4 +43,5 @@
 
 .content {
   margin: 0;
+  word-break: break-word;
 }

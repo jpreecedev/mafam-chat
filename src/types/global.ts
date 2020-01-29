@@ -4,6 +4,7 @@ export type Message = {
   sent: Date;
   content: string;
   avatar: string;
+  hidden: boolean;
 };
 
 export type User = {

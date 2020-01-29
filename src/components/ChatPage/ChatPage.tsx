@@ -9,6 +9,7 @@ import { useFirebaseChatGroupById, useFirebaseAuth } from "../../hooks";
 import { CHATS_REF, MESSAGES_REF } from "../../constants";
 import { Message } from "../../types";
 import { ChatMessage } from "../ChatMessage";
+import { groupRelatedMessages } from "../../utils";
 
 const scrollToBottom = (mainEl: React.MutableRefObject<HTMLElement | null>) => {
   setTimeout(() => {
@@ -27,14 +28,17 @@ const ChatPage = () => {
 
   const renderMessages = () => {
     scrollToBottom(mainEl);
-    return (
-      group &&
-      group.messages &&
-      Object.keys(group.messages).map(key => {
-        const message: Message = group.messages[key];
-        return <ChatMessage message={message} user={user} key={key} />;
-      })
-    );
+
+    if (!group || !Object.keys(group.messages).length) {
+      return null;
+    }
+
+    const messages = groupRelatedMessages(group.messages);
+
+    return Object.keys(messages).map(key => {
+      const message: Message = messages[key];
+      return <ChatMessage message={message} user={user} key={key} />;
+    });
   };
 
   const renderNoMessages = () => {
@@ -48,6 +52,10 @@ const ChatPage = () => {
   };
 
   const sendMessage = (message: string) => {
+    if (!message) {
+      return;
+    }
+
     firebase
       .database()
       .ref(`${CHATS_REF}/${id}/${MESSAGES_REF}`)
@@ -75,6 +83,7 @@ const ChatPage = () => {
           type="text"
           name="message"
           id="message"
+          autoComplete="off"
           placeholder="Type your message here"
           minLength={1}
           value={newMessage}

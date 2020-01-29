@@ -15,10 +15,16 @@
   }
 }
 
+@media only screen and (max-device-width: 480px) {
+  .container {
+    height: calc(98vh - 56px);
+  }
+}
+
 .body {
   overflow-y: scroll;
   padding: 0;
-  margin: calc(var(--app-unit-primary) * 2);
+  padding: calc(var(--app-unit-primary) * 2);
   flex-grow: 1;
 }
 
