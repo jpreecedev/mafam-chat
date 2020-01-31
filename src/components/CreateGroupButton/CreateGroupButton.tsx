@@ -62,7 +62,9 @@ const CreateGroupButton = () => {
       .push({
         name: groupName,
         created: firebase.database.ServerValue.TIMESTAMP,
-        [currentUserId]: true
+        participants: {
+          [currentUserId]: true
+        }
       });
 
     setModalIsOpen(false);

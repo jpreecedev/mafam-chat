@@ -17,10 +17,15 @@ export type User = {
   providerId: string;
 };
 
+export type Participants = {
+  [key: string]: boolean;
+};
+
 export type Group = {
   key: string;
   created: Date;
   name: string;
   messages: Object;
   lastMessage: Message;
+  participants: Participants;
 };

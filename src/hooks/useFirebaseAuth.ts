@@ -3,20 +3,11 @@ import firebase from "firebase/app";
 
 import { USERS_REF } from "../constants";
 
-const requestPermissionForNotifications = (onGranted: Function) => {
-  firebase
-    .messaging()
-    .requestPermission()
-    .then(function() {
-      onGranted();
-    });
-};
-
 const updateToken = () => {
   firebase
     .messaging()
     .getToken()
-    .then(function(currentToken) {
+    .then(currentToken => {
       if (firebase.auth().currentUser?.uid && currentToken) {
         firebase
           .database()
@@ -36,7 +27,7 @@ const useFirebaseAuth = (firebaseApp: firebase.app.App | any) => {
   React.useEffect(() => {
     const unregisterAuthObserver = firebaseApp
       .auth()
-      .onAuthStateChanged(firebaseUser => {
+      .onAuthStateChanged(async firebaseUser => {
         if (!firebaseUser) {
           setUser(null);
           return;
@@ -50,9 +41,9 @@ const useFirebaseAuth = (firebaseApp: firebase.app.App | any) => {
           .child(firebaseUser.uid)
           .set(firebaseUser.providerData[0]);
 
-        requestPermissionForNotifications(() => {
-          updateToken();
-        });
+        await firebase.messaging().requestPermission();
+
+        updateToken();
       });
 
     return () => {

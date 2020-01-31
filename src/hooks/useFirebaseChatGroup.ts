@@ -32,6 +32,7 @@ const useFirebaseChatGroup = () => {
         created: new Date(val[key].created),
         name: val[key].name,
         messages: val[key].messages || [],
+        participants: val[key].participants || {},
         lastMessage: getLastMessage(val[key].messages)
       }));
 
@@ -48,16 +49,16 @@ const useFirebaseChatGroup = () => {
 
 const useFirebaseChatGroupById = (id: string) => {
   const [group, setGroup] = React.useState<Group | null>(null);
+  const userId = firebase.auth().currentUser?.uid;
 
   React.useEffect(() => {
-    const userId = firebase.auth().currentUser?.uid;
     const chatRef = firebase
       .database()
       .ref(CHATS_REF)
       .child(id);
 
     if (userId) {
-      chatRef.update({
+      chatRef.child("participants").update({
         [userId]: true
       });
     }
@@ -73,6 +74,7 @@ const useFirebaseChatGroupById = (id: string) => {
         created: new Date(val.created),
         name: val.name,
         messages: val.messages || [],
+        participants: val.participants || {},
         lastMessage:
           val.messages && val.messages.length > -1
             ? val.messages[val.messages.length - 1]
@@ -83,7 +85,7 @@ const useFirebaseChatGroupById = (id: string) => {
     return () => {
       chatRef.off("value");
     };
-  }, [id]);
+  }, [id, userId]);
 
   return group;
 };
