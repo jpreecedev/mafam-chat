@@ -7,8 +7,10 @@ try {
   );
 
   firebase.initializeApp({
+    apiKey: "AIzaSyCmIpliCOIdUkT1rt1X1bq17OXz-yDUzSU",
+    projectId: "mafam-74c63",
     messagingSenderId: "411268033916",
-    projectId: "mafam-74c63"
+    appId: "1:411268033916:web:29669d012b1986ccf808f9"
   });
 
   const messaging = firebase.messaging();
