@@ -1,4 +1,4 @@
-import { Message } from "../types";
+import { Message } from "../../types";
 
 const groupMessages = (messages: Message[] | undefined): Message[][] => {
   if (!messages || !messages.length) {

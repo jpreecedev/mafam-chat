@@ -23,7 +23,7 @@ const updateToken = () => {
           .ref(
             `users/${
               firebase.auth().currentUser?.uid
-            }/notificationTokens/currentToken`
+            }/notificationTokens/${currentToken}`
           )
           .set(true);
       }

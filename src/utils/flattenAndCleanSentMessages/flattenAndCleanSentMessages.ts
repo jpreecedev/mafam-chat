@@ -1,4 +1,4 @@
-import { Message } from "../types";
+import { Message } from "../../types";
 
 const flattenAndCleanSentMessages = (messages: Message[][] | undefined) => {
   if (!messages || !messages.length || !messages[0].length) {

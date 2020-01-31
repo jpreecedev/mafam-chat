@@ -1,4 +1,4 @@
-import { Message } from "../types";
+import { Message } from "../../types";
 import { groupMessages } from "./groupMessages";
 
 describe("Group messages tests", () => {

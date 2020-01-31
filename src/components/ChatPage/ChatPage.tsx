@@ -7,9 +7,8 @@ import sendImg from "../../assets/send.png";
 import { Header } from "../Header";
 import { useFirebaseChatGroupById, useFirebaseAuth } from "../../hooks";
 import { CHATS_REF, MESSAGES_REF } from "../../constants";
-import { Message } from "../../types";
 import { ChatMessage } from "../ChatMessage";
-import { groupRelatedMessages } from "../../utils";
+import { groupRelatedMessages, parseMessages } from "../../utils";
 
 const scrollToBottom = (mainEl: React.MutableRefObject<HTMLElement | null>) => {
   setTimeout(() => {
@@ -26,26 +25,25 @@ const ChatPage = () => {
   const user = useFirebaseAuth(firebase);
   const mainEl = React.useRef<HTMLElement | null>(null);
 
+  const messages = group
+    ? groupRelatedMessages(parseMessages(group.messages))
+    : [];
+
   const renderMessages = () => {
     scrollToBottom(mainEl);
 
-    if (!group || !Object.keys(group.messages).length) {
+    if (!messages.length) {
       return null;
     }
 
-    const messages = groupRelatedMessages(group.messages);
-
-    return Object.keys(messages).map(key => {
-      const message: Message = messages[key];
-      return <ChatMessage message={message} user={user} key={key} />;
-    });
+    return messages.map(message => (
+      <ChatMessage message={message} user={user} key={message.parentKey} />
+    ));
   };
 
   const renderNoMessages = () => {
     return (
-      group &&
-      group.messages &&
-      Object.keys(group.messages).length === 0 && (
+      messages.length === 0 && (
         <p className={styles.noMessages}>There are no messages right now.</p>
       )
     );

@@ -1,5 +1,5 @@
-import { Message } from "../types";
-import { flattenAndCleanSentMessages } from "./flattenAndCleanSentMessages";
+import { Message } from "../../types";
+import { flattenAndCleanSentMessages } from "../flattenAndCleanSentMessages";
 
 describe("Flatten and Clean Sent Messages tests", () => {
   let messageFromSenderA: Message = {
@@ -8,7 +8,8 @@ describe("Flatten and Clean Sent Messages tests", () => {
     sender: "senderA",
     senderName: "senderNameA",
     sent: new Date(),
-    hidden: false
+    hidden: false,
+    parentKey: "parentKey"
   };
 
   it("should return an empty array when messages is undefined", () => {
