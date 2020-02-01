@@ -124,3 +124,27 @@ input[type="text"]:focus {
   color: var(--app-color-third);
   border-bottom: none;
 }
+
+.emoji-mart {
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.emoji-mart-anchors,
+.emoji-mart-search,
+.emoji-mart-bar {
+  display: none !important;
+}
+
+.emoji-mart,
+.emoji-mart-category-label span {
+  background-color: var(--app-bg) !important;
+}
+
+.emoji-mart-category-label span {
+  color: var(--app-color-primary) !important;
+}
+
+.emoji-mart-scroll {
+  margin: var(--app-unit-primary) 0 !important;
+}

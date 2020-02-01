@@ -41,13 +41,13 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  width: 42px;
+  min-width: 42px;
   height: 42px;
 }
 
 .footer {
   display: flex;
-  padding: calc(var(--app-unit-primary) * 2);
+  padding: calc(var(--app-unit-primary) * 2) calc(var(--app-unit-primary) / 2);
   display: flex;
   justify-content: center;
   align-items: center;

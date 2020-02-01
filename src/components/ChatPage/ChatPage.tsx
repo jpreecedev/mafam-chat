@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 
 import styles from "./styles.module.css";
 import sendImg from "../../assets/send.png";
+import smileyImg from "../../assets/smiley.png";
 import { Header } from "../Header";
 import { useFirebaseChatGroupById, useFirebaseAuth } from "../../hooks";
 import { CHATS_REF, MESSAGES_REF } from "../../constants";
 import { ChatMessage } from "../ChatMessage";
 import { groupRelatedMessages, parseMessages } from "../../utils";
+import { EmojiPicker } from "../EmojiPicker";
 
 const scrollToBottom = (mainEl: React.MutableRefObject<HTMLElement | null>) => {
   setTimeout(() => {
@@ -21,6 +23,9 @@ const scrollToBottom = (mainEl: React.MutableRefObject<HTMLElement | null>) => {
 const ChatPage = () => {
   const { id = "" } = useParams();
   const [newMessage, setNewMessage] = React.useState<string>("");
+  const [isEmojiPanelVisible, setIsEmojiPanelVisible] = React.useState<boolean>(
+    false
+  );
   const group = useFirebaseChatGroupById(id);
   const user = useFirebaseAuth(firebase);
   const mainEl = React.useRef<HTMLElement | null>(null);
@@ -77,6 +82,13 @@ const ChatPage = () => {
         {renderNoMessages()}
       </main>
       <footer className={styles.footer}>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => setIsEmojiPanelVisible(!isEmojiPanelVisible)}
+        >
+          <img src={smileyImg} alt="send" />
+        </button>
         <input
           type="text"
           name="message"
@@ -100,6 +112,13 @@ const ChatPage = () => {
           <img src={sendImg} alt="send" />
         </button>
       </footer>
+      {isEmojiPanelVisible && (
+        <footer>
+          <EmojiPicker
+            onSelected={emoji => setNewMessage(`${newMessage}${emoji}`)}
+          />
+        </footer>
+      )}
     </div>
   );
 };
