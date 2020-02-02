@@ -71,6 +71,7 @@ const ChatPage = () => {
       });
 
     setNewMessage("");
+    setIsEmojiPanelVisible(false);
   };
 
   return (
