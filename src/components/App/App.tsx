@@ -25,6 +25,8 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
 const App = () => {
   const user = useFirebaseAuth(firebaseApp);
 
