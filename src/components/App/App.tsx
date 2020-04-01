@@ -1,12 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+  RouteProps
+} from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/database";
 import "firebase/messaging";
 
-import { useFirebaseAuth } from "../../hooks";
 import { LandingPage } from "../LandingPage";
 import { GroupsPage } from "../GroupsPage";
 import { ChatPage } from "../ChatPage";
@@ -22,26 +29,36 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-const App = () => {
-  const user = useFirebaseAuth(firebaseApp);
+const AuthenticatedRoute: React.FC<RouteProps> = props => {
+  const [user, initialising] = useAuthState(firebase.auth());
+  if (initialising) {
+    return null;
+  }
 
+  if (user) {
+    return <Route {...props} />;
+  }
+  return <Redirect to="/" />;
+};
+
+const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/chat/:id">
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <AuthenticatedRoute path="/chat/:id">
           <ChatPage />
-        </Route>
-        <Route path="/groups">
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/groups">
           <GroupsPage />
-        </Route>
-        <Route path="/">
-          <LandingPage user={user} />
-        </Route>
+        </AuthenticatedRoute>
       </Switch>
     </Router>
   );

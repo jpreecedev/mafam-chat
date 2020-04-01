@@ -1,38 +1,33 @@
-import React, { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, Redirect } from "react-router-dom";
 import firebase from "firebase/app";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const uiConfig = {
   signInFlow: "popup",
-  signInSuccessUrl: "/dashboard",
+  signInSuccessUrl: "/groups",
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
 };
 
-interface SignInProps {
-  user: firebase.User | null;
-}
+const SignIn: React.FC = () => {
+  const [user, initialising] = useAuthState(firebase.auth());
 
-const SignIn: FunctionComponent<SignInProps> = ({ user }) => (
-  <>
-    {!user && (
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-    )}
-    {user && (
-      <>
-        <Link to="/groups" className="button">
-          Take me to ma fam
-        </Link>
-        <Link
-          to="#"
-          className="button secondary"
-          onClick={() => firebase.auth().signOut()}
-        >
-          Log me out
-        </Link>
-      </>
-    )}
-  </>
-);
+  if (initialising) {
+    return null;
+  }
+
+  return (
+    <>
+      {!user && (
+        <StyledFirebaseAuth
+          uiConfig={uiConfig}
+          firebaseAuth={firebase.auth()}
+        />
+      )}
+      {user && <Redirect to="/groups" />}
+    </>
+  );
+};
 
 export { SignIn };
