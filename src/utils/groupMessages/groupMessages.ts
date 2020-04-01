@@ -1,5 +1,10 @@
 import { Message } from "../../types";
 
+const dateDifference = (date1: Date, date2: Date) => {
+  const diffTime = Math.abs((date2 as any) - (date1 as any));
+  return Math.ceil(diffTime / (1000 * 60));
+};
+
 const groupMessages = (messages: Message[] | undefined): Message[][] => {
   if (!messages || !messages.length) {
     return [];
@@ -16,7 +21,10 @@ const groupMessages = (messages: Message[] | undefined): Message[][] => {
     } else {
       const lastMessage = lastArray[lastArray.length - 1];
 
-      if (lastMessage.sender === message.sender) {
+      if (
+        lastMessage.sender === message.sender &&
+        dateDifference(lastMessage.sent as Date, message.sent as Date) <= 5
+      ) {
         lastArray.push(message);
       } else {
         result.push([message]);
