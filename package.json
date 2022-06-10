@@ -39,7 +39,7 @@
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.1.0",
     "s3-deploy": "^1.4.0",
-    "semantic-release": "^17.0.4",
+    "semantic-release": "^19.0.3",
     "typescript": "^3.8.3"
   },
   "eslintConfig": {
